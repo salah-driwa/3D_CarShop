@@ -6,7 +6,7 @@ const App = () => {
   const routing = useRoutes(routes);
 
   return (
-    <div>
+    <div className=' min-h-screen '>
       <Suspense fallback={<div>Loading...</div>}>
         {routing}
       </Suspense>

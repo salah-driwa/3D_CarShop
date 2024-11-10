@@ -7,4 +7,5 @@ export default defineConfig({
     react(),
     Pages(),
   ],
+  assetsInclude: ["**/*.glb"], // Tell Vite to include .glb files as assets
 });
