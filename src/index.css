@@ -76,6 +76,35 @@ body,
   margin-bottom: 0.25em;
 }
 
+.loading-screen {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: white;
+  font-size: 18px;
+  
+}
+
+.progress-bar {
+ 
+  height: 10px;
+  background: #ddd;
+  margin-bottom: 10px;
+}
+
+.progress {
+  height: 100%;
+  background: #3498db;
+  transition: width 0.2s ease;
+}
+
+.progress-text {
+  font-size: 16px;
+}
+
+
 @media only screen and (max-width: 1000px) {
   .caption {
     font-size: 4em;

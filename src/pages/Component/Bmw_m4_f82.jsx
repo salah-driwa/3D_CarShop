@@ -20,7 +20,6 @@ export function Model({ scroll, animationName, ...props   }) {
 
   useEffect(() => void (actions[animationName].play().paused = true), [animationName])
 
- 
 
   useFrame(() => {
     actions[animationName].time = THREE.MathUtils.lerp(actions[animationName].time, actions[animationName].getClip().duration * scroll.current, 0.05)
