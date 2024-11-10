@@ -48,7 +48,7 @@ const Index = () => {
       <div style={{ height: "100vh" }}>
         <div className="fixed z-50 top-0 left-0 right-0 bg-gray-800 text-white p-4 flex justify-around">
           <button onClick={() => handleNavClick("CameraInside")}>Camera Inside</button>
-          <button onClick={() => handleNavClick("CameraOutside")}>Camera Outside</button>
+          <button onClick={() => handleNavClick("CameraOustide")}>Camera Outside</button>
         </div>
 
         {/* Canvas and Suspense are wrapped here */}

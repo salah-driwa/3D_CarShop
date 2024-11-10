@@ -274,7 +274,13 @@ export function Model({ scroll, animationName, ...props   }) {
               </group>
               <group name="ARm4_interior" rotation={[-Math.PI / 2, 0, 0]} scale={100}>
                 <mesh name="ARm4_interior_ARm4_alcnt_0" geometry={nodes.ARm4_interior_ARm4_alcnt_0.geometry} material={materials.ARm4_alcnt} />
-                <mesh name="ARm4_interior_ARm4_color_interior_0" geometry={nodes.ARm4_interior_ARm4_color_interior_0.geometry} material={materials.ARm4_color_interior} />
+                <mesh
+  name="ARm4_interior_ARm4_color_interior_0"
+  geometry={nodes.ARm4_interior_ARm4_color_interior_0.geometry}
+  material={materials.ARm4_color_interior}
+  >
+  <meshStandardMaterial color={0xff000} />  {/* Changing color to red */}
+</mesh>
                 <mesh name="ARm4_interior_ARm4_common_alum_0" geometry={nodes.ARm4_interior_ARm4_common_alum_0.geometry} material={materials.ARm4_common_alum} />
                 <mesh name="ARm4_interior_ARm4_common_black_0" geometry={nodes.ARm4_interior_ARm4_common_black_0.geometry} material={materials.ARm4_common_black} />
                 <mesh name="ARm4_interior_ARm4_common_carbon_0" geometry={nodes.ARm4_interior_ARm4_common_carbon_0.geometry} material={materials.ARm4_common_carbon} />
