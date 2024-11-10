@@ -5,9 +5,10 @@
 import { useState, Suspense, useRef, useEffect } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Environment } from "@react-three/drei";
-import { Model } from "../../Bmw_m4_f82";
+
 import Overlay from "./OverlayInside";
 import OverlayOutside from "./OverlayOutside";
+import { Model } from "./Component/Bmw_m4_f82";
 
 const Index = () => {
   const [animationName, setAnimationName] = useState("CameraInside");
