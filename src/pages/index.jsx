@@ -8,6 +8,8 @@ import OverlayOutside from "./OverlayOutside";
 import { Model } from "./Component/Bmw_m4_f82";
 
 import { Html, useProgress } from '@react-three/drei';
+import { SiBmw } from "react-icons/si";
+import { motion } from "framer-motion";
 
 function Loader() {
   const { progress } = useProgress();
@@ -29,10 +31,14 @@ function Loader() {
 }
 
 const Index = () => {
-  const [animationName, setAnimationName] = useState("CameraInside");
+  const [animationName, setAnimationName] = useState("CameraOustide");
   const overlay = useRef();
   const caption = useRef();
   const scroll = useRef(0);
+  
+  const [isHovered, setIsHovered] = useState(false);
+
+  
 
   // Reset scroll position when the animationName changes
   useEffect(() => {
@@ -46,26 +52,65 @@ const Index = () => {
   return (
     <div className="bg-white text-black h-screen w-screen overflow-y-scroll">
       <div style={{ height: "100vh" }}>
-        <div className="fixed z-50 top-0 left-0 right-0 bg-gray-800 text-white p-4 flex justify-around">
-          <button onClick={() => handleNavClick("CameraInside")}>Camera Inside</button>
-          <button onClick={() => handleNavClick("CameraOustide")}>Camera Outside</button>
+        <div className="fixed z-50 top-0 left-0 right-0 font-semibold  px-5 hover:bg-gradient-to-b from-black/60 to-transparent text-white p-4 flex  justify-between " 
+        >
+        <SiBmw color="white" size={60} className=" " />
+
+        <div
+         onMouseEnter={() => setIsHovered(true)}
+         onMouseLeave={() => setIsHovered(false)}>
+          <span className=" absolute right-10 text-white text-opacity-75  hover:text-opacity-100 z-50">Menu</span>
+
+{isHovered && (
+        <motion.div
+          initial={{ x: 0, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          exit={{ x: 0, opacity: 0 ,transition:{duration:10} }}
+          transition={{ duration: 0.3 }}
+          
+          className="top-0 pt-10  z-20  right-0  bg-gradient-to-bl from-black/70 to-transparent     gap-3 absolute bg-opacity-50 w-1/5  flex flex-col  align-top justify-center p-4"
+        >
+          <div
+            onClick={() => handleNavClick("CameraInside")}
+            className=" text-right text-lg px-8  pt-5 hover:scale-110 transition-all text-white text-opacity-75 hover:text-opacity-100 rounded"
+          >
+            Interior
+          </div>
+          <div
+            onClick={() => handleNavClick("CameraOustide")}  
+               className=" text-right text-lg  px-8  hover:scale-110 transition-all text-white text-opacity-75 hover:text-opacity-100 rounded"
+          >
+           Exterior
+          </div>
+        </motion.div>
+      )}
+        </div>
+       
         </div>
 
         {/* Canvas and Suspense are wrapped here */}
-        <Canvas shadows eventSource={document.getElementById("root")} eventPrefix="client">
+        <Canvas shadows shadowMap eventSource={document.getElementById("root")} eventPrefix="client">
           {/* Suspense wrapped inside Canvas to handle loading state */}
           <Suspense fallback={<Loader />}>
-            <ambientLight intensity={0.3} />
-            <directionalLight
-              position={[10, 6, 5]}
-              intensity={5}
+           {/* Ambient light for general illumination */}
+           <ambientLight intensity={0.1} color="#ffb100" />
+
+            {/* Directional Light (like sunset) */}
+            <directionalLight 
+              position={[10, 6, 5]} 
+              intensity={3} 
+              color="#ff9e00"  // Sunset-like warm color
               castShadow
-              shadow-mapSize-width={2024}
-              shadow-mapSize-height={2024}
+              shadow-mapSize-width={1024}  // Controls the shadow quality
+              shadow-mapSize-height={1024}
+              shadow-bias={-0.0001}  // Adjust if shadows appear too harsh or disconnected
+        
             />
 
             {/* Key prop forces re-render on animation change */}
             <Model key={animationName} scroll={scroll} animationName={animationName} />
+           
+  
             <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -1, 0]} receiveShadow>
               <planeGeometry args={[50, 50]} />
               <meshStandardMaterial color="#777" metalness={0.2} roughness={1} />

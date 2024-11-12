@@ -17,16 +17,15 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-html,
-body,
-#root,
-.scroll {
+/* General Reset */
+html, body, #root, .scroll {
   width: 100%;
   height: 100%;
   margin: 0;
   padding: 0;
   user-select: none;
   overflow: hidden;
+
 }
 
 .scroll {
@@ -36,6 +35,7 @@ body,
   overflow-y: auto;
   scroll-snap-type: y proximity;
 }
+
 .caption {
   pointer-events: none;
   position: fixed;
@@ -49,12 +49,27 @@ body,
   font-variant-numeric: tabular-nums;
   -webkit-font-smoothing: auto;
 }
+.SubTitle {
+  pointer-events: none;
+  position: fixed;
+  bottom: 20px;
+  left: 50px;
+  color: white;
+  font-size: 6em;
+  font-weight: 400;
+  line-height: 1em;
+  font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: auto;
+}
 
+.SubTitle span {
+  display: block; /* Ensures each word appears on a new line */
+}
 
 .dot {
   pointer-events: none;
   position: sticky;
-  top: 0px;
+  bottom: 0px;
   display: inline-block;
   max-width: 600px;
   padding: 0;
@@ -75,6 +90,7 @@ body,
   margin: 0;
   margin-bottom: 0.25em;
 }
+
 
 .loading-screen {
   position: absolute;
