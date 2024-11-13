@@ -26,10 +26,10 @@ const OverlayOutside = forwardRef(({ caption, scroll }, ref) => {
       
           if (scrollDirection === 1 && scrollTop < maxScroll) {
             // Scroll down
-            ref.current.scrollTop = scrollTop + 2; // Adjust scroll speed here
+            ref.current.scrollTop = scrollTop + 10; // Adjust scroll speed here
           } else if (scrollDirection === -1 && scrollTop > 0) {
             // Scroll up
-            ref.current.scrollTop = scrollTop - 2; // Adjust scroll speed here
+            ref.current.scrollTop = scrollTop - 10; // Adjust scroll speed here
           } else {
             // Reverse direction when reaching the top or bottom
             setScrollDirection((prev) => (prev === 1 ? -1 : 1));

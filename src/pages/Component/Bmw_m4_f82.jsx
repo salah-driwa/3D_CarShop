@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-duplicate-props */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/no-unknown-property */
 /*
@@ -49,7 +50,9 @@ export function Model({ scroll, animationName,color, ...props}) {
   return (
     
      
-   <group ref={group} {...props} position={[1,-1,1]}  dispose={null}>
+  
+     <group ref={group} {...props} position={[1,-1,1]} dispose={null}>
+    <group ref={group} {...props} dispose={null}>
       <group name="Scene">
         <group name="Sketchfab_model" rotation={[-Math.PI / 2, 0, 0]}>
           <group name="F82fbx" rotation={[Math.PI / 2, 0, 0]} scale={0.01}>
@@ -485,12 +488,12 @@ export function Model({ scroll, animationName,color, ...props}) {
               </group>
               <group name="ARm4_taillight_L_snake001" position={[0, 0, -0.094]} rotation={[-Math.PI / 2, 0, 0]} scale={100}>
                 <mesh name="ARm4_taillight_L_snake001_ARm4_common_black001_0" geometry={nodes.ARm4_taillight_L_snake001_ARm4_common_black001_0.geometry} material={materials['ARm4_common_black.002']} />
-                <mesh name="ARm4_taillight_L_snake001_ARm4_headsignal_L_alt001_0" geometry={nodes.ARm4_taillight_L_snake001_ARm4_headsignal_L_alt001_0.geometry} material={materials['ARm4_headsignal_L_alt.001']} />
+                <mesh name="ARm4_taillight_L_snake001_ARm4_headsignal_L_alt001_0" geometry={nodes.ARm4_taillight_L_snake001_ARm4_headsignal_L_alt001_0.geometry} material={materials['Scene_-_Root.001']} />
                 <mesh name="ARm4_taillight_L_snake001_ARm4_taillight_alt001_0" geometry={nodes.ARm4_taillight_L_snake001_ARm4_taillight_alt001_0.geometry} material={materials['ARm4_taillight_alt.001']} />
               </group>
               <group name="ARm4_taillight_R_snake001" position={[0, 0, -0.094]} rotation={[-Math.PI / 2, 0, 0]} scale={100}>
                 <mesh name="ARm4_taillight_R_snake001_ARm4_common_black001_0" geometry={nodes.ARm4_taillight_R_snake001_ARm4_common_black001_0.geometry} material={materials['ARm4_common_black.002']} />
-                <mesh name="ARm4_taillight_R_snake001_ARm4_headsignal_L_alt001_0" geometry={nodes.ARm4_taillight_R_snake001_ARm4_headsignal_L_alt001_0.geometry} material={materials['ARm4_headsignal_L_alt.001']} />
+                <mesh name="ARm4_taillight_R_snake001_ARm4_headsignal_L_alt001_0" geometry={nodes.ARm4_taillight_R_snake001_ARm4_headsignal_L_alt001_0.geometry} material={materials['Scene_-_Root.001']} />
                 <mesh name="ARm4_taillight_R_snake001_ARm4_taillight_alt001_0" geometry={nodes.ARm4_taillight_R_snake001_ARm4_taillight_alt001_0.geometry} material={materials['ARm4_taillight_alt.001']} />
               </group>
               <group name="ARm4_taillightglass_L_tinted" position={[0, 0, -0.128]} rotation={[-Math.PI / 2, 0, 0]} scale={100}>
@@ -521,7 +524,7 @@ export function Model({ scroll, animationName,color, ...props}) {
               </group>
               <group name="ARm4_trunklight_snake001" position={[0, 0, -0.094]} rotation={[-Math.PI / 2, 0, 0]} scale={100}>
                 <mesh name="ARm4_trunklight_snake001_ARm4_common_black001_0" geometry={nodes.ARm4_trunklight_snake001_ARm4_common_black001_0.geometry} material={materials['ARm4_common_black.002']} />
-                <mesh name="ARm4_trunklight_snake001_ARm4_headsignal_L_alt001_0" geometry={nodes.ARm4_trunklight_snake001_ARm4_headsignal_L_alt001_0.geometry} material={materials['ARm4_headsignal_L_alt.001']} />
+                <mesh name="ARm4_trunklight_snake001_ARm4_headsignal_L_alt001_0" geometry={nodes.ARm4_trunklight_snake001_ARm4_headsignal_L_alt001_0.geometry} material={materials['Scene_-_Root.001']} />
                 <mesh name="ARm4_trunklight_snake001_ARm4_rev001_0" geometry={nodes.ARm4_trunklight_snake001_ARm4_rev001_0.geometry} material={materials['ARm4_rev.001']} />
                 <mesh name="ARm4_trunklight_snake001_ARm4_taillight_alt001_0" geometry={nodes.ARm4_trunklight_snake001_ARm4_taillight_alt001_0.geometry} material={materials['ARm4_taillight_alt.001']} />
               </group>
@@ -574,9 +577,15 @@ export function Model({ scroll, animationName,color, ...props}) {
           </group>
         </group>
         <group name="Camera_target" position={[-0.058, 0.652, -0.25]} />
-        <PerspectiveCamera name="Camera_inside" makeDefault={false} far={1000} near={0.1} fov={53.702} position={[4.294, 1.069, -0.778]} rotation={[2.789, 1.461, -2.791]} makeDefault />
+        <PerspectiveCamera name="Camera_inside" makeDefault={true} far={1000} near={0.1} fov={53.702} position={[4.294, 1.069, -0.778]} rotation={[2.789, 1.461, -2.791]} />
+        <mesh name="Cube" geometry={nodes.Cube.geometry} material={materials['metalic ground']} position={[39.407, -0.015, 1.757]} rotation={[-Math.PI, 0, 0]} scale={[-1.367, -0.032, -25.577]} />
+        <mesh name="Cube002" geometry={nodes.Cube002.geometry} material={materials['Scene_-_Root.002']} position={[5.519, -0.03, 1.757]} scale={[35.059, 0.032, 24.564]} />
+        <mesh name="Cube001" geometry={nodes.Cube001.geometry} material={materials['metalic ground']} position={[3.825, -0.169, 24.712]} rotation={[0, Math.PI / 2, 0]} scale={[0.046, 0.187, 33.018]} />
+        <mesh name="Cube004" geometry={nodes.Cube004.geometry} material={nodes.Cube004.material} position={[-30.795, 3.505, 3.198]} scale={[1, 4.742, 1]} />
       </group>
     </group>
+    </group>
+   
     
    
   )

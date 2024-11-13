@@ -2,7 +2,7 @@
 /* eslint-disable react/no-unknown-property */
 import { useState, useRef, useEffect, Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
-import { Environment } from "@react-three/drei";
+import {  Environment, useGLTF } from "@react-three/drei";
 import Overlay from "./OverlayInside";
 import OverlayOutside from "./OverlayOutside";
 import { Model } from "./Component/Bmw_m4_f82";
@@ -11,7 +11,7 @@ import { Html, useProgress } from '@react-three/drei';
 import { SiBmw } from "react-icons/si";
 import { motion } from "framer-motion";
 import CarColorSelector from "./CarColorSelector";
-
+import second from '../assets/3d assets/gear.glb'
 function Loader() {
   const { progress } = useProgress();
   return (
@@ -31,6 +31,20 @@ function Loader() {
   );
 }
 
+function BackgroundModel() {
+  // Load your GLB model here
+  const { scene } = useGLTF(second); // Replace with your GLB file path
+
+  console.log(scene)
+  return (
+    <primitive
+      object={scene}
+      position={[-3,-3,12]} // Position it far enough to act as the background
+      scale={[0.09, 0.09, 0.09]} // Scale the model to fit as the background
+      rotation={[0.2, 0, 0]} // Optional: adjust the rotation of the model if needed
+    />
+  );
+}
 
 const carColors = [
   { name: "Bright Dusk", colorCode: "#D9AFA3" },
@@ -65,14 +79,14 @@ const Index = () => {
   return (
     <div className="bg-white text-black h-screen w-screen overflow-y-scroll">
       <div style={{ height: "100vh" }}>
-        <div className="fixed z-50 top-0 left-0 right-0 font-semibold  px-5 hover:bg-gradient-to-b from-black/60 to-transparent text-white p-4 flex  justify-between " 
+        <div className="fixed z-50 top-0 left-0 right-0 font-semibold  px-5 bg-gradient-to-b from-black/60 to-transparent text-white p-4 flex  justify-between " 
         >
         <SiBmw color="white" size={60} className=" " />
 
         <div
          onMouseEnter={() => setIsHovered(true)}
          onMouseLeave={() => setIsHovered(false)}>
-          <span className=" absolute right-10 text-white text-opacity-75  hover:text-opacity-100 z-50">Menu</span>
+          <span className=" absolute right-10 text-white text-opacity-100 text-3xl  hover:text-opacity-100 z-50">Menu</span>
 
 {isHovered && (
         <motion.div
@@ -81,23 +95,23 @@ const Index = () => {
           exit={{ x: 0, opacity: 0 ,transition:{duration:10} }}
           transition={{ duration: 0.3 }}
           
-          className="top-0 pt-10  z-20  right-0  bg-gradient-to-bl from-black/70 to-transparent     gap-3 absolute bg-opacity-50 w-1/5  flex flex-col  align-top justify-center p-4"
+          className="top-0 pt-10  z-20  right-0  bg-gradient-to-l from-black to-gra/5     gap-3 absolute bg-opacity-50 w-1/5  flex flex-col  align-top justify-center p-4"
         >
           <div
             onClick={() => handleNavClick("CameraInside")}
-            className=" text-right text-lg px-8  pt-5 hover:scale-110 transition-all text-white text-opacity-75 hover:text-opacity-100 rounded"
+            className=" text-right  px-8  pt-20 hover:scale-110 transition-all text-2xl  text-white text-opacity-75 hover:text-opacity-100 rounded"
           >
             Interior
           </div>
           <div
             onClick={() => handleNavClick("CameraOustide")}  
-               className=" text-right text-lg  px-8  hover:scale-110 transition-all text-white text-opacity-75 hover:text-opacity-100 rounded"
+               className=" text-right   px-8  hover:scale-110 transition-all text-2xl text-white text-opacity-75 hover:text-opacity-100 rounded"
           >
            Exterior
           </div>
           <div
             onClick={() => handleNavClick("CameraSideway")}  
-               className=" text-right text-lg  px-8  hover:scale-110 transition-all text-white text-opacity-75 hover:text-opacity-100 rounded"
+               className=" text-right text-2xl  px-8  hover:scale-110 transition-all text-white text-opacity-75 hover:text-opacity-100 rounded"
           >
            Colors
           </div>
@@ -125,17 +139,16 @@ const Index = () => {
               shadow-bias={-0.0001}  // Adjust if shadows appear too harsh or disconnected
         
             />
+           <BackgroundModel/>
+           <Model key={animationName } scroll={scroll} animationName={animationName} color={selectedColor}  />
 
-            {/* Key prop forces re-render on animation change */}
-            <Model key={animationName } scroll={scroll} animationName={animationName} color={selectedColor}  />
+          
            
   
-            <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -1, 0]} receiveShadow>
-              <planeGeometry args={[50, 50]} />
-              <meshStandardMaterial color="#777" metalness={0.2} roughness={1} />
-            </mesh>
+           
             <Environment preset="sunset" background />
           </Suspense>
+   
         </Canvas>
 
         {/* Conditional overlays based on animationName */}
