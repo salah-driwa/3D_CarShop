@@ -1,34 +1,58 @@
 /* eslint-disable react/prop-types */
-import { forwardRef } from "react";
+import { forwardRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { IoPlay } from "react-icons/io5";
+import { FaPause } from "react-icons/fa";
 
 const OverlayOutside = forwardRef(({ caption, scroll }, ref) => {
+  const [isScrolling, setIsScrolling] = useState(false);
+  const [scrollDirection, setScrollDirection] = useState(1); // 1 for scrolling down, -1 for scrolling up
   const items = [
-    {
-      id: 1,
-      title: "Tailored steering wheel",
-      description:
-        "This leather-free three-spoke steering wheel is hand stitched and wrapped in a synthetic material with a luxurious touch. Stylish satin silk trim and colour-coordinated stitching add to the finely crafted feel. For extra comfort in cold weather, the steering wheel is available with electrical heating.",
-    },
-    {
-      id: 2,
-      title: "Checkered aluminum decor",
-      description:
-        "This stylish aluminium decor enhances the elegant and dynamic character of your Volvo by adding a technical, modern touch to the car's interior.",
-    },
-    {
-      id: 3,
-      title: "Leather in charcoal interior",
-      description:
-        "Smooth Charcoal Leather upholstery in a colour-coordinated Charcoal interior with crafted decor in genuine materials for a distinctive, timeless expression of style.",
-    },
-    {
-      id: 4,
-      title: "Relax in comfort",
-      description:
-        "Sink back into your seat and savour the fine Nappa leather of the S90 Recharge. Soft to the touch, you and your passengers enjoy relaxed comfort on every journey.",
-    },
+    { id: 1 },
+    { id: 2 },
+    { id: 3 },
+    { id: 4 },
   ];
+
+  useEffect(() => {
+    let scrollInterval;
+    if (isScrolling) {
+      // Start auto-scrolling when isScrolling is true
+      scrollInterval = setInterval(() => {
+        if (ref.current) {
+          const scrollHeight = ref.current.scrollHeight;
+          const scrollTop = ref.current.scrollTop;
+          const maxScroll = scrollHeight - window.innerHeight-2;
+      
+          if (scrollDirection === 1 && scrollTop < maxScroll) {
+            // Scroll down
+            ref.current.scrollTop = scrollTop + 2; // Adjust scroll speed here
+          } else if (scrollDirection === -1 && scrollTop > 0) {
+            // Scroll up
+            ref.current.scrollTop = scrollTop - 2; // Adjust scroll speed here
+          } else {
+            // Reverse direction when reaching the top or bottom
+            setScrollDirection((prev) => (prev === 1 ? -1 : 1));
+            // In case the scroll has reached the bottom, scroll back up by a little bit
+         
+            if (scrollTop >= maxScroll) {
+              ref.current.scrollTop = maxScroll - 2; // Prevent it from overshooting the max scroll
+            } else if (scrollTop <= 0) {
+              ref.current.scrollTop = 2; // Prevent it from overshooting the top
+            }
+          }
+        }
+       // console.log(scrollDirection)
+      }, 30); // ~30ms per frame for smoother scrolling
+    } else {
+      // Clear the interval if auto-scrolling is disabled
+      clearInterval(scrollInterval);
+    }
+
+    return () => {
+      clearInterval(scrollInterval); // Cleanup on component unmount or when scrolling stops
+    };
+  }, [isScrolling, scrollDirection, ref]);
 
   return (
     <div
@@ -37,50 +61,51 @@ const OverlayOutside = forwardRef(({ caption, scroll }, ref) => {
         scroll.current = e.target.scrollTop / (e.target.scrollHeight - window.innerHeight);
         caption.current.innerText = scroll.current.toFixed(2);
       }}
-      className="scroll text-white snap-y snap-mandatory  overflow-y-scroll h-screen"
+      className="scroll text-white overflow-y-scroll h-screen"
     >
       {items.map((item, index) => (
-    <motion.div
-    key={item.id}
-    className="snap-center flex items-end justify-end p-5 h-screen" // Replaced m-5 with p-5
-    initial={{ opacity: 0, y: 50 }}
-    animate={{ opacity: 1, y: 0 }}
-    exit={{ opacity: 0 }}
-    transition={{
-      delay: index * 0.2,
-      duration: 0.6,
-      ease: "easeInOut",
-    }}
-    style={{
-      zIndex: items.length - index,
-      opacity: 1 - index * 0.2, // Fades out as cards are stacked
-    }}
-  >
-    <div className="relative w-[80%] max-w-lg bg-black bg-opacity-50 backdrop-blur-lg rounded-2xl shadow-lg p-8">
-      <h1 className="text-3xl font-semibold text-white">{item.title}</h1>
-      <p className="mt-4 text-white text-opacity-70">{item.description}</p>
-    </div>
-  </motion.div>
-  
+        <motion.div
+          key={item.id}
+          className="flex items-end justify-end p-5 h-screen"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0 }}
+          transition={{
+            delay: index * 0.2,
+            duration: 0.6,
+            ease: "easeInOut",
+          }}
+          style={{
+            zIndex: items.length - index,
+            opacity: 1 - index * 0.2, // Fades out as cards are stacked
+          }}
+        >
+          <div className="relative w-[80%] max-w-lg">
+            <h1 className="text-3xl font-semibold text-white">{item.title}</h1>
+            <p className="mt-4 text-white text-opacity-70">{item.description}</p>
+          </div>
+        </motion.div>
       ))}
 
       <span className="caption" ref={caption}>
         0.00
       </span>
- 
-      <div className="SubTitle">
-        <span>INDULGE</span>
-        <span>YOUR</span>
-        <span>SENSES</span>
-        <div className="  mt-16 text-3xl">
-        Exterior
-      </div>
-      </div>
-     
 
+      <div className="SubTitle">
+        <div className="mt-16 text-3xl">INTERIOR</div>
+      </div>
+
+      {/* Play Button */}
+      <button
+        className="fixed bottom-10 right-10 p-4 bg-black/50 text-white rounded-full shadow-xl"
+        onClick={() => setIsScrolling((prev) => !prev)} // Toggle auto-scroll
+      >
+        {!isScrolling ? <IoPlay /> : <FaPause />}
+      </button>
     </div>
   );
 });
+
 OverlayOutside.displayName = "OverlayOutside";
 
 export default OverlayOutside;
