@@ -58,10 +58,10 @@ export function Model({ scroll, animationName,color, ...props}) {
           <group name="F82fbx" rotation={[Math.PI / 2, 0, 0]} scale={0.01}>
             <group name="RootNode">
               <group name="amdb11_brakedisc_FR001" position={[75.519, 37.323, -150.797]} rotation={[Math.PI / 2, -0.035, Math.PI]} scale={105.483}>
-                <mesh name="amdb11_brakedisc_FR001_amdb11_brake002_0" geometry={nodes.amdb11_brakedisc_FR001_amdb11_brake002_0.geometry} material={materials['amdb11_brake.002']} />
-                <mesh name="amdb11_brakedisc_FR001_amdb11_caliper002_0" geometry={nodes.amdb11_brakedisc_FR001_amdb11_caliper002_0.geometry} material={materials['amdb11_caliper.002']} />
-                <mesh name="amdb11_brakedisc_FR001_amdb11_misc002_0" geometry={nodes.amdb11_brakedisc_FR001_amdb11_misc002_0.geometry} material={materials['amdb11_misc.002']} />
-                <mesh name="amdb11_brakedisc_FR001_amdb11_misc_chrome002_0" geometry={nodes.amdb11_brakedisc_FR001_amdb11_misc_chrome002_0.geometry} material={materials['amdb11_misc_chrome.002']} />
+                <mesh castShadow  name="amdb11_brakedisc_FR001_amdb11_brake002_0" geometry={nodes.amdb11_brakedisc_FR001_amdb11_brake002_0.geometry} material={materials['amdb11_brake.002']} />
+                <mesh castShadow  name="amdb11_brakedisc_FR001_amdb11_caliper002_0" geometry={nodes.amdb11_brakedisc_FR001_amdb11_caliper002_0.geometry} material={materials['amdb11_caliper.002']} />
+                <mesh castShadow  name="amdb11_brakedisc_FR001_amdb11_misc002_0" geometry={nodes.amdb11_brakedisc_FR001_amdb11_misc002_0.geometry} material={materials['amdb11_misc.002']} />
+                <mesh castShadow  name="amdb11_brakedisc_FR001_amdb11_misc_chrome002_0" geometry={nodes.amdb11_brakedisc_FR001_amdb11_misc_chrome002_0.geometry} material={materials['amdb11_misc_chrome.002']} />
               </group>
               <group name="amdb11_brakedisc_FR002" position={[-75.261, 37.323, 130.31]} rotation={[-Math.PI / 2, -0.035, Math.PI]} scale={-105.483}>
                 <mesh name="amdb11_brakedisc_FR002_amdb11_brake002_0" geometry={nodes.amdb11_brakedisc_FR002_amdb11_brake002_0.geometry} material={materials['amdb11_brake.002']} />
@@ -578,10 +578,10 @@ export function Model({ scroll, animationName,color, ...props}) {
         </group>
         <group name="Camera_target" position={[-0.058, 0.652, -0.25]} />
         <PerspectiveCamera name="Camera_inside" makeDefault={true} far={1000} near={0.1} fov={53.702} position={[4.294, 1.069, -0.778]} rotation={[2.789, 1.461, -2.791]} />
-        <mesh name="Cube" geometry={nodes.Cube.geometry} material={materials['metalic ground']} position={[39.407, -0.015, 1.757]} rotation={[-Math.PI, 0, 0]} scale={[-1.367, -0.032, -25.577]} />
-        <mesh name="Cube002" geometry={nodes.Cube002.geometry} material={materials['Scene_-_Root.002']} position={[5.519, -0.03, 1.757]} scale={[35.059, 0.032, 24.564]} />
-        <mesh name="Cube001" geometry={nodes.Cube001.geometry} material={materials['metalic ground']} position={[3.825, -0.169, 24.712]} rotation={[0, Math.PI / 2, 0]} scale={[0.046, 0.187, 33.018]} />
-        <mesh name="Cube004" geometry={nodes.Cube004.geometry} material={nodes.Cube004.material} position={[-30.795, 3.505, 3.198]} scale={[1, 4.742, 1]} />
+        <mesh name="Cube"    castShadow receiveShadow  geometry={nodes.Cube.geometry} material={materials['metalic ground']} position={[39.407, -0.015, 1.757]} rotation={[-Math.PI, 0, 0]} scale={[-1.367, -0.032, -25.577]} />
+        <mesh name="Cube002" castShadow receiveShadow geometry={nodes.Cube002.geometry} material={materials['Scene_-_Root.002']} position={[5.519, -0.03, 1.757]} scale={[35.059, 0.032, 24.564]} />
+        <mesh name="Cube001" castShadow receiveShadow geometry={nodes.Cube001.geometry} material={materials['metalic ground']} position={[3.825, -0.169, 24.712]} rotation={[0, Math.PI / 2, 0]} scale={[0.046, 0.187, 33.018]} />
+        <mesh name="Cube004" castShadow receiveShadow geometry={nodes.Cube004.geometry} material={nodes.Cube004.material} position={[-30.795, 3.505, 3.198]} scale={[1, 4.742, 1]} />
       </group>
     </group>
     </group>
