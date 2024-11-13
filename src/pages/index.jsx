@@ -10,6 +10,7 @@ import { Model } from "./Component/Bmw_m4_f82";
 import { Html, useProgress } from '@react-three/drei';
 import { SiBmw } from "react-icons/si";
 import { motion } from "framer-motion";
+import CarColorSelector from "./CarColorSelector";
 
 function Loader() {
   const { progress } = useProgress();
@@ -30,14 +31,26 @@ function Loader() {
   );
 }
 
+
+const carColors = [
+  { name: "Bright Dusk", colorCode: "#D9AFA3" },
+  { name: "Silver Dawn", colorCode: "#C0C0C0" },
+  { name: "Denim Blue", colorCode: "#3A5A9E" },
+  { name: "Onyx Black", colorCode: "#1C1C1C" },
+  { name: "Crystal White", colorCode: "#F0F0F0" },
+  { name: "Platinum Grey", colorCode: "#B3B3B3" },
+  { name: "Vapour Grey", colorCode: "#8D8D8D" },
+];
+
 const Index = () => {
   const [animationName, setAnimationName] = useState("CameraOustide");
   const overlay = useRef();
   const caption = useRef();
   const scroll = useRef(0);
-  
+  //const [selectedColor, setSelectedColor] = useState("#333"); // Default color
   const [isHovered, setIsHovered] = useState(false);
-
+  // eslint-disable-next-line no-unused-vars
+  const [selectedColor, setSelectedColor] = useState(carColors[0].colorCode);
   
 
   // Reset scroll position when the animationName changes
@@ -82,6 +95,12 @@ const Index = () => {
           >
            Exterior
           </div>
+          <div
+            onClick={() => handleNavClick("CameraSideway")}  
+               className=" text-right text-lg  px-8  hover:scale-110 transition-all text-white text-opacity-75 hover:text-opacity-100 rounded"
+          >
+           Colors
+          </div>
         </motion.div>
       )}
         </div>
@@ -108,7 +127,7 @@ const Index = () => {
             />
 
             {/* Key prop forces re-render on animation change */}
-            <Model key={animationName} scroll={scroll} animationName={animationName} />
+            <Model key={animationName } scroll={scroll} animationName={animationName} color={selectedColor}  />
            
   
             <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -1, 0]} receiveShadow>
@@ -120,11 +139,15 @@ const Index = () => {
         </Canvas>
 
         {/* Conditional overlays based on animationName */}
-        {animationName === "CameraInside" ? (
-          <Overlay ref={overlay} caption={caption} scroll={scroll} key={animationName} />
-        ) : (
-          <OverlayOutside ref={overlay} caption={caption} scroll={scroll} key={animationName} />
-        )}
+      {/* Conditional overlays based on animationName */}
+{animationName === "CameraInside" ? (
+  <Overlay ref={overlay} caption={caption} scroll={scroll} key={animationName} />
+) : animationName === "CameraOustide" ? (
+  <OverlayOutside ref={overlay} caption={caption} scroll={scroll} key={animationName} />
+) : (
+  <CarColorSelector  carColors={carColors} selectedColor={selectedColor} setSelectedColor={setSelectedColor} />
+)}
+
       </div>
     </div>
   );

@@ -11,12 +11,23 @@ import { useFrame } from '@react-three/fiber'
 import model from '../../assets/3d assets/bmw_m4_f82.glb'
 
 // eslint-disable-next-line react/prop-types, no-unused-vars
-export function Model({ scroll, animationName, ...props }) {
+export function Model({ scroll, animationName,color, ...props}) {
   const group = React.useRef();
   const { nodes, materials, animations } = useGLTF(model);
   const { actions } = useAnimations(animations, group);
 
   useEffect(() => void (actions[animationName].play().paused = true), [animationName]);
+
+    useEffect(() => {
+    // Update the color of the CarBody material
+    if (materials.CarBody && color) {
+      materials.CarBody.color = new THREE.Color(color);
+      // Manually trigger material updates in Three.js
+      materials.CarBody.needsUpdate = true;
+      console.log(color)
+    }
+  }, [color, materials.CarBody]);
+
 
   useEffect(() => {
     // Apply shadow properties to all meshes in the "Sketchfab_model" group
@@ -38,15 +49,13 @@ export function Model({ scroll, animationName, ...props }) {
   return (
     
      
-    <group ref={group} {...props}  position={[1,-1,1]}   dispose={null}>
+   <group ref={group} {...props} position={[1,-1,1]}  dispose={null}>
       <group name="Scene">
         <group name="Sketchfab_model" rotation={[-Math.PI / 2, 0, 0]}>
           <group name="F82fbx" rotation={[Math.PI / 2, 0, 0]} scale={0.01}>
             <group name="RootNode">
-              <group name="amdb11_brakedisc_FR001"  position={[75.519, 37.323, -150.797]} rotation={[Math.PI / 2, -0.035, Math.PI]} scale={105.483}>
-                <mesh name="amdb11_brakedisc_FR001_amdb11_brake002_0" 
-                 
-                  geometry={nodes.amdb11_brakedisc_FR001_amdb11_brake002_0.geometry} material={materials['amdb11_brake.002']} />
+              <group name="amdb11_brakedisc_FR001" position={[75.519, 37.323, -150.797]} rotation={[Math.PI / 2, -0.035, Math.PI]} scale={105.483}>
+                <mesh name="amdb11_brakedisc_FR001_amdb11_brake002_0" geometry={nodes.amdb11_brakedisc_FR001_amdb11_brake002_0.geometry} material={materials['amdb11_brake.002']} />
                 <mesh name="amdb11_brakedisc_FR001_amdb11_caliper002_0" geometry={nodes.amdb11_brakedisc_FR001_amdb11_caliper002_0.geometry} material={materials['amdb11_caliper.002']} />
                 <mesh name="amdb11_brakedisc_FR001_amdb11_misc002_0" geometry={nodes.amdb11_brakedisc_FR001_amdb11_misc002_0.geometry} material={materials['amdb11_misc.002']} />
                 <mesh name="amdb11_brakedisc_FR001_amdb11_misc_chrome002_0" geometry={nodes.amdb11_brakedisc_FR001_amdb11_misc_chrome002_0.geometry} material={materials['amdb11_misc_chrome.002']} />
@@ -76,7 +85,6 @@ export function Model({ scroll, animationName, ...props }) {
                 <mesh name="ARm4_backlight_tinted_ARm4_glass_tinted_0" geometry={nodes.ARm4_backlight_tinted_ARm4_glass_tinted_0.geometry} material={materials.ARm4_glass_tinted} />
               </group>
               <group name="ARm4_body" rotation={[-Math.PI / 2, 0, 0]} scale={100}>
-                <mesh name="ARm4_body_ARm4_main_0" geometry={nodes.ARm4_body_ARm4_main_0.geometry} material={materials.ARm4_main} />
                 <mesh name="ARm4_body_ARm4_chmsl_0" geometry={nodes.ARm4_body_ARm4_chmsl_0.geometry} material={materials.ARm4_chmsl} />
                 <mesh name="ARm4_body_ARm4_common_black_0" geometry={nodes.ARm4_body_ARm4_common_black_0.geometry} material={materials.ARm4_common_black} />
                 <mesh name="ARm4_body_ARm4_Details_D_0" geometry={nodes.ARm4_body_ARm4_Details_D_0.geometry} material={materials.ARm4_Details_D} />
@@ -102,12 +110,10 @@ export function Model({ scroll, animationName, ...props }) {
               </group>
               <group name="ARm4_bumper_F" rotation={[-Math.PI / 2, 0, 0]} scale={100}>
                 <mesh name="ARm4_bumper_F_ARm4_common_black_0" geometry={nodes.ARm4_bumper_F_ARm4_common_black_0.geometry} material={materials.ARm4_common_black} />
-                <mesh name="ARm4_bumper_F_ARm4_main_0" geometry={nodes.ARm4_bumper_F_ARm4_main_0.geometry} material={materials.ARm4_main} />
               </group>
               <group name="ARm4_bumper_R" rotation={[-Math.PI / 2, 0, 0]} scale={100}>
                 <mesh name="ARm4_bumper_R_ARm4_common_black_0" geometry={nodes.ARm4_bumper_R_ARm4_common_black_0.geometry} material={materials.ARm4_common_black} />
                 <mesh name="ARm4_bumper_R_ARm4_Light_D_0" geometry={nodes.ARm4_bumper_R_ARm4_Light_D_0.geometry} material={materials.ARm4_Light_D} />
-                <mesh name="ARm4_bumper_R_ARm4_main_0" geometry={nodes.ARm4_bumper_R_ARm4_main_0.geometry} material={materials.ARm4_main} />
                 <mesh name="ARm4_bumper_R_ARm4_Metal_D_0" geometry={nodes.ARm4_bumper_R_ARm4_Metal_D_0.geometry} material={materials.ARm4_Metal_D} />
               </group>
               <group name="ARm4_bumper_Support" rotation={[-Math.PI / 2, 0, 0]} scale={100}>
@@ -130,7 +136,6 @@ export function Model({ scroll, animationName, ...props }) {
               <group name="ARm4_door_L" rotation={[-Math.PI / 2, 0, 0]} scale={100}>
                 <mesh name="ARm4_door_L_ARm4_common_black_0" geometry={nodes.ARm4_door_L_ARm4_common_black_0.geometry} material={materials.ARm4_common_black} />
                 <mesh name="ARm4_door_L_ARm4_common_metal_0" geometry={nodes.ARm4_door_L_ARm4_common_metal_0.geometry} material={materials.ARm4_common_metal} />
-                <mesh name="ARm4_door_L_ARm4_main_0" geometry={nodes.ARm4_door_L_ARm4_main_0.geometry} material={materials.ARm4_main} />
                 <mesh name="ARm4_door_L_etkc_0" geometry={nodes.ARm4_door_L_etkc_0.geometry} material={materials['etkc.001']} />
               </group>
               <group name="ARm4_door_L_handle_carbon" position={[0.134, 0, 0]} rotation={[-Math.PI / 2, 0, 0]} scale={100}>
@@ -139,7 +144,6 @@ export function Model({ scroll, animationName, ...props }) {
               <group name="ARm4_door_R" rotation={[-Math.PI / 2, 0, 0]} scale={100}>
                 <mesh name="ARm4_door_R_ARm4_common_black_0" geometry={nodes.ARm4_door_R_ARm4_common_black_0.geometry} material={materials.ARm4_common_black} />
                 <mesh name="ARm4_door_R_ARm4_common_metal_0" geometry={nodes.ARm4_door_R_ARm4_common_metal_0.geometry} material={materials.ARm4_common_metal} />
-                <mesh name="ARm4_door_R_ARm4_main_0" geometry={nodes.ARm4_door_R_ARm4_main_0.geometry} material={materials.ARm4_main} />
                 <mesh name="ARm4_door_R_etkc_0" geometry={nodes.ARm4_door_R_etkc_0.geometry} material={materials['etkc.001']} />
               </group>
               <group name="ARm4_door_R_handle_carbon" position={[-0.163, 0, 0]} rotation={[-Math.PI / 2, 0, 0]} scale={100}>
@@ -207,12 +211,10 @@ export function Model({ scroll, animationName, ...props }) {
               <group name="ARm4_fender_L" rotation={[-Math.PI / 2, 0, 0]} scale={100}>
                 <mesh name="ARm4_fender_L_ARm4_common_black_0" geometry={nodes.ARm4_fender_L_ARm4_common_black_0.geometry} material={materials.ARm4_common_black} />
                 <mesh name="ARm4_fender_L_ARm4_Details_D_0" geometry={nodes.ARm4_fender_L_ARm4_Details_D_0.geometry} material={materials.ARm4_Details_D} />
-                <mesh name="ARm4_fender_L_ARm4_main_0" geometry={nodes.ARm4_fender_L_ARm4_main_0.geometry} material={materials.ARm4_main} />
               </group>
               <group name="ARm4_fender_R" rotation={[-Math.PI / 2, 0, 0]} scale={100}>
                 <mesh name="ARm4_fender_R_ARm4_common_black_0" geometry={nodes.ARm4_fender_R_ARm4_common_black_0.geometry} material={materials.ARm4_common_black} />
                 <mesh name="ARm4_fender_R_ARm4_Details_D_0" geometry={nodes.ARm4_fender_R_ARm4_Details_D_0.geometry} material={materials.ARm4_Details_D} />
-                <mesh name="ARm4_fender_R_ARm4_main_0" geometry={nodes.ARm4_fender_R_ARm4_main_0.geometry} material={materials.ARm4_main} />
               </group>
               <group name="ARm4_fender_trim_R" rotation={[-Math.PI / 2, 0, 0]} scale={100}>
                 <mesh name="ARm4_fender_trim_R_ARm4_common_black_0" geometry={nodes.ARm4_fender_trim_R_ARm4_common_black_0.geometry} material={materials.ARm4_common_black} />
@@ -279,7 +281,6 @@ export function Model({ scroll, animationName, ...props }) {
                 <mesh name="ARm4_hood_ARm4_common_black_0" geometry={nodes.ARm4_hood_ARm4_common_black_0.geometry} material={materials.ARm4_common_black} />
                 <mesh name="ARm4_hood_ARm4_common_chrome_0" geometry={nodes.ARm4_hood_ARm4_common_chrome_0.geometry} material={materials.ARm4_common_chrome} />
                 <mesh name="ARm4_hood_ARm4_common_engine_0" geometry={nodes.ARm4_hood_ARm4_common_engine_0.geometry} material={materials.ARm4_common_engine} />
-                <mesh name="ARm4_hood_ARm4_main_0" geometry={nodes.ARm4_hood_ARm4_main_0.geometry} material={materials.ARm4_main} />
               </group>
               <group name="ARm4_hub_F" rotation={[-Math.PI / 2, 0, 0]}>
                 <mesh name="ARm4_hub_F_etkc_0" geometry={nodes.ARm4_hub_F_etkc_0.geometry} material={materials.etkc} />
@@ -439,7 +440,7 @@ export function Model({ scroll, animationName, ...props }) {
                 <mesh name="ARm4_signalstalk_ARm4_interior_symbols_0" geometry={nodes.ARm4_signalstalk_ARm4_interior_symbols_0.geometry} material={materials.ARm4_interior_symbols} />
               </group>
               <group name="ARm4_skirt_race" rotation={[-Math.PI / 2, 0, 0]} scale={100}>
-                <mesh name="ARm4_skirt_race_ARm4_main_0" geometry={nodes.ARm4_skirt_race_ARm4_main_0.geometry} material={materials.ARm4_main} />
+                <mesh name="ARm4_skirt_race_ARm4_main_0" geometry={nodes.ARm4_skirt_race_ARm4_main_0.geometry} material={materials.CarBody} />
               </group>
               <group name="ARm4_splitter_street_carbon" position={[0, -0.199, 0]} rotation={[-Math.PI / 2, 0, 0]} scale={100}>
                 <mesh name="ARm4_splitter_street_carbon_ARm4_common_carbon_0" geometry={nodes.ARm4_splitter_street_carbon_ARm4_common_carbon_0.geometry} material={materials.ARm4_common_carbon} />
@@ -511,7 +512,6 @@ export function Model({ scroll, animationName, ...props }) {
                 <mesh name="ARm4_trunk_ARm4_alcnt_0" geometry={nodes.ARm4_trunk_ARm4_alcnt_0.geometry} material={materials.ARm4_alcnt} />
                 <mesh name="ARm4_trunk_ARm4_common_black_0" geometry={nodes.ARm4_trunk_ARm4_common_black_0.geometry} material={materials.ARm4_common_black} />
                 <mesh name="ARm4_trunk_ARm4_lowbeam_0" geometry={nodes.ARm4_trunk_ARm4_lowbeam_0.geometry} material={materials.ARm4_lowbeam} />
-                <mesh name="ARm4_trunk_ARm4_main_0" geometry={nodes.ARm4_trunk_ARm4_main_0.geometry} material={materials.ARm4_main} />
               </group>
               <group name="ARm4_trunklight_L_tinted" position={[0, 0, -0.128]} rotation={[-Math.PI / 2, 0, 0]} scale={100}>
                 <mesh name="ARm4_trunklight_L_tinted_ARm4_glass_head_tinted_0" geometry={nodes.ARm4_trunklight_L_tinted_ARm4_glass_head_tinted_0.geometry} material={materials.ARm4_glass_head_tinted} />
@@ -574,14 +574,10 @@ export function Model({ scroll, animationName, ...props }) {
           </group>
         </group>
         <group name="Camera_target" position={[-0.058, 0.652, -0.25]} />
-        <group name="NurbsPath" position={[0, 3.456, 0]} />
-        <group name="Empty001" position={[-2.056, 1.961, -0.061]} />
-       
-        <PerspectiveCamera name="Camera_inside" makeDefault far={1000}
-         near={0.1} fov={50.702} position={[0.412, 1.068, -0.354]}
-          rotation={[-2.838, 0.062, 3.122]} />
+        <PerspectiveCamera name="Camera_inside" makeDefault={false} far={1000} near={0.1} fov={53.702} position={[4.294, 1.069, -0.778]} rotation={[2.789, 1.461, -2.791]} makeDefault />
       </group>
     </group>
+    
    
   )
 }

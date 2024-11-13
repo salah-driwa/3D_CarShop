@@ -73,7 +73,7 @@ const OverlayOutside = forwardRef(({ caption, scroll }, ref) => {
         <span>YOUR</span>
         <span>SENSES</span>
         <div className="  mt-16 text-3xl">
-        INTERIOR
+        Exterior
       </div>
       </div>
      
