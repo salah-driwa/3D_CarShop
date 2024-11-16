@@ -12,6 +12,7 @@ import { SiBmw } from "react-icons/si";
 import { motion } from "framer-motion";
 import CarColorSelector from "./CarColorSelector";
 import second from '../assets/3d assets/gear.glb'
+import DetailSection from "./Component/DetailSection";
 function Loader() {
   const { progress } = useProgress();
   return (
@@ -35,7 +36,7 @@ function BackgroundModel() {
   // Load your GLB model here
   const { scene } = useGLTF(second); // Replace with your GLB file path
 
-  console.log(scene)
+  
   return (
     <primitive
       object={scene}
@@ -58,6 +59,8 @@ const carColors = [
 
 const Index = () => {
   const [animationName, setAnimationName] = useState("CameraOustide");
+  const [Detail, setDetail] = useState(false);
+  
   const overlay = useRef();
   const caption = useRef();
   const scroll = useRef(0);
@@ -73,12 +76,23 @@ const Index = () => {
   }, [animationName]);
 
   const handleNavClick = (name) => {
+    if(name != "ShowDetails"){
     setAnimationName(name);
-  };
+    console.log(name)
+    setDetail(false)
+  } 
+  else
+  { 
+    setDetail(true)
+    setAnimationName("CameraOustide");
+    console.log(name)
+
+  } 
+}
 
   return (
-    <div className="bg-white text-black h-screen w-screen overflow-y-scroll">
-      <div style={{ height: "100vh" }}>
+    <div className="bg-white text-black  h-screen w-screen ">
+      <div style={{ height: "100vh" }} className=" relative">
         <div className="fixed z-50 top-0 left-0 right-0 font-semibold  px-5 bg-gradient-to-b from-black/60 to-transparent text-white p-4 flex  justify-between " 
         >
         <SiBmw color="white" size={60} className=" " />
@@ -115,10 +129,16 @@ const Index = () => {
           >
            Colors
           </div>
+          <div
+            onClick={() => handleNavClick("ShowDetails")}  
+               className=" text-right text-2xl  px-8  hover:scale-110 transition-all text-white text-opacity-75 hover:text-opacity-100 rounded"
+          >
+           ShowDetails
+          </div>
         </motion.div>
       )}
         </div>
-       
+        
         </div>
 
         {/* Canvas and Suspense are wrapped here */}
@@ -151,14 +171,19 @@ const Index = () => {
    
         </Canvas>
 
-        {/* Conditional overlays based on animationName */}
-      {/* Conditional overlays based on animationName */}
-{animationName === "CameraInside" ? (
+{/* Conditional overlays based on animationName */}
+{Detail ? (
+  <DetailSection />
+) : animationName === "CameraInside" ? (
   <Overlay ref={overlay} caption={caption} scroll={scroll} key={animationName} />
 ) : animationName === "CameraOustide" ? (
   <OverlayOutside ref={overlay} caption={caption} scroll={scroll} key={animationName} />
 ) : (
-  <CarColorSelector  carColors={carColors} selectedColor={selectedColor} setSelectedColor={setSelectedColor} />
+  <CarColorSelector
+    carColors={carColors}
+    selectedColor={selectedColor}
+    setSelectedColor={setSelectedColor}
+  />
 )}
 
       </div>
