@@ -13,25 +13,63 @@ import { motion } from "framer-motion";
 import CarColorSelector from "./CarColorSelector";
 import second from '../assets/3d assets/gear.glb'
 import DetailSection from "./Component/DetailSection";
+import logo from '../assets/bmw-logo.svg'
+
+
+
 function Loader() {
   const { progress } = useProgress();
+  const [dots, setDots] = useState('');
+
+  // Animate dots
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setDots((prevDots) => (prevDots.length < 3 ? prevDots + '.' : ''));
+    }, 100); // Change dots every 500ms
+    return () => clearInterval(interval); // Cleanup interval
+  }, []);
+
   return (
     <Html center>
       <div className="loading-screen h-screen w-screen flex flex-col items-center bg-white">
-      <h1 className=" text-black text-xl mt-56">Loading 3D Model ...</h1>
-        <div className="progress-bar   mx-auto w-5/12">
-      
+        {/* Animated Dots */}
+        <h1 className="text-black text-xl mt-56">
+          Loading 3D Models{dots}
+        </h1>
+
+        {/* Rotating Logo */}
+        <div
+          className={`loader mx-auto w-28 h-28 mt-10`}
+          style={{
+            animation: progress < 100 ? 'spin 1s linear infinite' : 'none',
+          }}
+        >
+          <img src={logo} alt="Loading Logo" className="w-full h-full" />
+        </div>
+
+        {/* Progress Bar */}
+        <div className="progress-bar w-2/3 mt-4 h-2 bg-gray-200 rounded-full">
           <div
-            className="progress"
+            className="progress h-full bg-blue-500 rounded-full transition-all"
             style={{ width: `${progress}%` }}
           />
         </div>
-        <div className="progress-text">{progress.toFixed(2)}% loaded</div>
       </div>
+
+      {/* Rotating Animation */}
+      <style jsx>{`
+        @keyframes spin {
+          from {
+            transform: rotate(0deg);
+          }
+          to {
+            transform: rotate(360deg);
+          }
+        }
+      `}</style>
     </Html>
   );
 }
-
 function BackgroundModel() {
   // Load your GLB model here
   const { scene } = useGLTF(second); // Replace with your GLB file path
@@ -144,11 +182,11 @@ const Index = () => {
         {/* Canvas and Suspense are wrapped here */}
         <Canvas shadows shadowMap eventSource={document.getElementById("root")} eventPrefix="client">
           {/* Suspense wrapped inside Canvas to handle loading state */}
-          <Suspense fallback={<Loader />}>
-           {/* Ambient light for general illumination */}
+          <Suspense fallback={<Loader />} >
+         
            <ambientLight intensity={0.1} color="#ffb100" />
 
-            {/* Directional Light (like sunset) */}
+           
             <directionalLight 
               position={[10, 6, 5]} 
               intensity={3} 
@@ -161,12 +199,12 @@ const Index = () => {
             />
            <BackgroundModel/>
            <Model key={animationName } scroll={scroll} animationName={animationName} color={selectedColor}  />
-
-          
-           
-  
-           
+   
             <Environment preset="sunset" background />
+          
+        
+
+        
           </Suspense>
    
         </Canvas>
