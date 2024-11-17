@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 // eslint-disable-next-line no-unused-vars
 /* eslint-disable react/prop-types */
 /* eslint-disable react/no-unknown-property */
