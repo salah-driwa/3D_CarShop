@@ -1,17 +1,32 @@
+import { CgWebsite } from "react-icons/cg";
+import SocialIcons from "./socialLinks";
 
 export function Footer() {
   return (
-    <footer className="p-6 bg-gray-50 rounded-lg shadow-lg space-y-6">
+    <footer className="p-6 mx-5    h-fit mt-64 justify-end align-bottom bg-[#1b1d21] rounded-lg shadow-lg  gap-4 flex ">
+
+      <div className=" w-5/12  justify-between flex flex-col">
       <section className="space-y-4">
-        <h2 className="text-xl font-bold text-gray-800">Volvo Cars</h2>
-        <p className="text-gray-700 leading-relaxed">
+  
+        <p className="text-white/70 leading-relaxed">
           From the very outset, Volvo Cars has been a brand for people who care about the world we live in and the people around us. We have made it our mission to make life easier, better, and safer for everyone.
         </p>
       </section>
 
-      <section className="space-y-4">
-        <h3 className="text-lg font-semibold text-gray-800">Help & Support</h3>
-        <ul className="grid grid-cols-2 gap-4 text-gray-700">
+      <div className=" flex gap-3 items-center">
+      <CgWebsite  size={35} color="white"/>
+      <span className="text-white leading-relaxed ">Germany</span>
+
+      </div>
+
+      </div>
+
+
+      <section className="flex flex-col   w-4/12 gap-6">
+      <div className="  h-full  flex flex-col">
+  
+        <h3 className="text-lg font-semibold text-white">Help & Support</h3>
+        <ul className="gap-4 text-white/70">
           <li>Book a Service</li>
           <li>Service & Maintenance</li>
           <li>Support & Manuals</li>
@@ -19,31 +34,34 @@ export function Footer() {
           <li>Accident & Repair</li>
           <li>Complaints Procedure</li>
         </ul>
-      </section>
-
-      <section className="space-y-4">
-        <h3 className="text-lg font-semibold text-gray-800">Contact</h3>
-        <ul className="grid grid-cols-2 gap-4 text-gray-700">
-          <li>Contact Us</li>
-          <li>Contact Volvo</li>
-          <li>Find a Retailer</li>
-          <li>Book a Test Drive</li>
-          <li>Volvo Studio London</li>
-          <li>Subscribe to Newsletter</li>
-        </ul>
-      </section>
-
-      <section className="space-y-4">
-        <h3 className="text-lg font-semibold text-gray-800">Volvo Cars App</h3>
-        <ul className="flex space-x-4 text-blue-600">
+   
+   
+      </div>
+      <div className="  h-full  flex flex-col">
+        <h3 className="text-lg font-semibold text-white">Volvo Cars App</h3>
+        <ul className="flex  flex-col text-blue-600">
           <li>App Store</li>
           <li>Google Play</li>
         </ul>
+        </div>
+      
       </section>
 
-      <section className="space-y-4">
-        <h3 className="text-lg font-semibold text-gray-800">Legal & Information</h3>
-        <ul className="grid grid-cols-2 gap-4 text-gray-700">
+      <div className="  h-full  w-4/12  flex flex-col">
+
+<h3 className="text-md font-semibold text-white">Contact</h3>
+  <ul className=" text-sm text-white/70">
+    <li>Contact Us</li>
+    <li>Contact Volvo</li>
+    <li>Find a Retailer</li>
+    <li>Book a Test Drive</li>
+    <li>Volvo Studio London</li>
+    <li>Subscribe to Newsletter</li>
+  </ul>
+
+  <div className="  h-full  flex flex-col">
+        <h3 className="text-md font-semibold text-white">Legal & Information</h3>
+        <ul className="  text-sm text-white/70">
           <li>United Kingdom</li>
           <li>Legal Information</li>
           <li>Cookies</li>
@@ -51,7 +69,12 @@ export function Footer() {
           <li>Business Information</li>
           <li>Modern Slavery Act</li>
         </ul>
-      </section>
+      </div>
+      
+<SocialIcons />
+  </div>
+
+     
     </footer>
   );
 }

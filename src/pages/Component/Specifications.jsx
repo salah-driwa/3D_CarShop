@@ -8,7 +8,7 @@ export function Specifications() {
   ];
 
   return (
-    <div className=" border-t border-gray-500/60 mx-6 rounded-xl   p-4">
+    <div className=" border-t  border-gray-500/60 mx-6 rounded-xl   p-4">
         <h1 className="text-6xl font-semibold text-black mb-6">
                 Specifications
               </h1>

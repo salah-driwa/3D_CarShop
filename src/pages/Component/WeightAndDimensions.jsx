@@ -1,6 +1,6 @@
 export function WeightAndDimensions() {
   return (
-    <div className="p-4 border h-[70vh] border-gray-500/70 rounded-xl w-11/12 mx-auto divide-y divide-gray-500 mt-12 shadow-md">
+    <div className="p-4 border h-[70vh]  border-gray-500/70 rounded-xl w-11/12 mx-auto divide-y divide-gray-500 mt-12 shadow-md">
       
       {/* Weight and Capacity */}
       <div className="mb-2 flex">

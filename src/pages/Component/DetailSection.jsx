@@ -38,7 +38,7 @@ function DetailSection() {
           >
             <div className="relative w-full h-full   ">
             
-              <div>{section.component}</div>
+            {section.component}
             </div>
           </motion.div>
         ))}
